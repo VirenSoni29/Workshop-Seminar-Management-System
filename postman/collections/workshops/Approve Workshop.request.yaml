@@ -1,0 +1,5 @@
+$kind: http-request
+url: http://localhost:5000/api/workshops/6aea0ee055922f802f2db634/approve
+method: PATCH
+settings: {}
+order: 8000

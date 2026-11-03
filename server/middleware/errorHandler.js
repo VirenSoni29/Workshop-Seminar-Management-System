@@ -1,9 +1,11 @@
-import AppError from "../utils/AppError.js";
 import { sendError } from "../utils/response.js";
 import config from "../config/config.js";
 
-export const notFound = (req, res, next) => {
-   next(new AppError(`Route not found: ${req.method} ${req.originalUrl}`, 404));
+export const notFound = (req, res) => {
+   return sendError(res, {
+      message: `Route not found: ${req.method} ${req.originalUrl}`,
+      statusCode: 404,
+   });
 };
 
 export const errorHandler = (err, req, res, next) => {

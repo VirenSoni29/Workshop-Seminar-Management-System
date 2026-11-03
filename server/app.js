@@ -7,6 +7,11 @@ import config from "./config/config.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.js";
 import { sendSuccess } from "./utils/response.js";
 
+import authRoutes from './routes/authRoutes.js';
+import workshopRoutes from './routes/workshopRoutes.js';
+import registrationRoutes from './routes/registrationRoutes.js';
+import checkinRoutes from './routes/checkinRoutes.js';
+
 const app = express();
 
 app.use(helmet());
@@ -29,6 +34,11 @@ if (config.nodeEnv === "development") {
 app.get("/api/health", (req, res) => {
    sendSuccess(res, { message: "Workshop Management API is running" });
 });
+
+app.use('/api/auth', authRoutes);
+app.use('/api/workshops', workshopRoutes);
+app.use('/api/registrations', registrationRoutes);
+app.use('/api/checkin', checkinRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

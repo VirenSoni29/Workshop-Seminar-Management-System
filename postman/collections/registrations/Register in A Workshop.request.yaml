@@ -1,0 +1,4 @@
+$kind: http-request
+url: http://localhost:5000/api/registrations/workshops/6aea0ee055922f802f2db634/register
+method: POST
+order: 1000

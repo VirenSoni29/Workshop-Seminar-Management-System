@@ -1,0 +1,4 @@
+$kind: http-request
+url: http://localhost:5000/api/registrations/6aea117855922f802f2db637
+method: DELETE
+order: 2000

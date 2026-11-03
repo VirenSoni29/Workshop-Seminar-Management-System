@@ -1,0 +1,42 @@
+$kind: http-request
+url: http://localhost:5000/api/auth/login
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"email\": \"viren@test.com\",\r
+
+    \    \"password\": \"pass1234\"\r
+
+    }"
+scripts:
+  - type: afterResponse
+    code: "// 1. Parse the response\r
+
+      const responseData = pm.response.json();\r
+
+      \r
+
+      // 2. Log the entire response to the console\r
+
+      console.log(\"Full Response Data:\", responseData);\r
+
+      \r
+
+      // 3. Try to save the token (adjust the path if needed)\r
+
+      if (responseData && responseData.data.token) {\r
+
+      \    pm.environment.set(\"currentAccessToken\", responseData.data.token);\r
+
+      \    console.log(\"Token saved successfully:\", responseData.data.token);\r
+
+      } else {\r
+
+      \    console.warn(\"Token key not found in the root of the response!\");\r
+
+      }\r\n"
+    language: text/javascript
+settings: {}
+order: 2000

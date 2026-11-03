@@ -1,0 +1,5 @@
+$kind: http-request
+url: http://localhost:5000/api/workshops/6ae9f6d19dec4ab2e522da4c
+method: DELETE
+settings: {}
+order: 10000

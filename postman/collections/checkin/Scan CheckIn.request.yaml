@@ -1,0 +1,11 @@
+$kind: http-request
+url: http://localhost:5000/api/checkin/scan
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"qrToken\": \"560fc112-9b2b-4b39-8693-e5ff6bc22519\"\r
+
+    }"
+order: 1000

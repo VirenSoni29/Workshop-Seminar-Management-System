@@ -1,0 +1,32 @@
+$kind: http-request
+url: http://localhost:5000/api/workshops
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"title\": \"Intro to Gen AI\",\r
+
+    \  \"description\": \"Hands-on two day workshop\",\r
+
+    \  \"type\": \"Workshop\",\r
+
+    \  \"department\": \"CSE\",\r
+
+    \  \"speaker\": \"Dr. Iyer\",\r
+
+    \  \"mode\": \"offline\",\r
+
+    \  \"venue\": \"Seminar Hall B\",\r
+
+    \  \"startDate\": \"2026-12-10T09:00:00.000Z\",\r
+
+    \  \"endDate\": \"2026-12-11T16:00:00.000Z\",\r
+
+    \  \"registrationDeadline\": \"2026-12-08T18:00:00.000Z\",\r
+
+    \  \"capacity\": 1\r
+
+    }"
+settings: {}
+order: 2000
