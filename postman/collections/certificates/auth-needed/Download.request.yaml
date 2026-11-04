@@ -1,0 +1,4 @@
+$kind: http-request
+url: http://localhost:5000/api/certificates/6aea7cd61ac1fe98596d73e8/download
+method: GET
+order: 3000

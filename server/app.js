@@ -11,6 +11,7 @@ import authRoutes from './routes/authRoutes.js';
 import workshopRoutes from './routes/workshopRoutes.js';
 import registrationRoutes from './routes/registrationRoutes.js';
 import checkinRoutes from './routes/checkinRoutes.js';
+import certificateRoutes from './routes/certificateRoutes.js';
 
 const app = express();
 
@@ -39,6 +40,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/workshops', workshopRoutes);
 app.use('/api/registrations', registrationRoutes);
 app.use('/api/checkin', checkinRoutes);
+app.use('/api/certificates', certificateRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

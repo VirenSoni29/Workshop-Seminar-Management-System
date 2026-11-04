@@ -1,0 +1,4 @@
+$kind: http-request
+url: http://localhost:5000/api/certificates/verify/CERT-D6EB9B79F4
+method: GET
+order: 2000

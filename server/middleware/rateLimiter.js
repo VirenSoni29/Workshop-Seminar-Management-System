@@ -1,14 +1,15 @@
 import rateLimit from 'express-rate-limit';
 
-const rateLimiter = rateLimit({
-   windowMs: 15 * 60 * 1000,  // 15 minute window
-   max: 100,              // max 100 requests per window per IP
-   standardHeaders: true,            // sends limit info in response headers
+const verifyLimiter = rateLimit({
+   windowMs: 15 * 60 * 1000,
+   max: 60,
+   standardHeaders: true,
    legacyHeaders: false,
-   message: {
-      success: false,
-      message: 'Too many requests, please try again after 15 minutes'
-   }
+   handler: (req, res) =>
+      res.status(429).json({
+         success: false,
+         message: 'Too many verification attempts. Please try again later.',
+      }),
 });
 
 const authLimiter = rateLimit({
@@ -23,4 +24,4 @@ const authLimiter = rateLimit({
       }),
 });
 
-export { rateLimiter, authLimiter };
+export { verifyLimiter, authLimiter };
