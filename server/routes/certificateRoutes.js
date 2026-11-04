@@ -1,4 +1,4 @@
-import express from 'express';
+import { Router } from 'express';
 import {
    generateCertificates,
    getMyCertificates,
@@ -8,7 +8,7 @@ import {
 import { protect, authorize } from '../middleware/auth.js';
 import { verifyLimiter } from '../middleware/rateLimiter.js';
 
-const router = express.Router();
+const router = Router();
 
 // PUBLIC: must be declared BEFORE router.use(protect)
 router.get('/verify/:certificateId', verifyLimiter, verifyCertificate);

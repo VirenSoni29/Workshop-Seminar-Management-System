@@ -1,4 +1,4 @@
-import express from 'express';
+import { Router } from 'express';
 import {
    registerForWorkshop,
    cancelRegistration,
@@ -7,7 +7,7 @@ import {
 } from '../controllers/registrationController.js';
 import { protect, authorize } from '../middleware/auth.js';
 
-const router = express.Router();
+const router = Router();
 
 router.use(protect);
 

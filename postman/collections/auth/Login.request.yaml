@@ -5,9 +5,9 @@ body:
   type: json
   content: "{\r
 
-    \    \"email\": \"viren@test.com\",\r
+    \    \"email\": \"admin@college.edu\",\r
 
-    \    \"password\": \"pass1234\"\r
+    \    \"password\": \"admin1234\"\r
 
     }"
 scripts:

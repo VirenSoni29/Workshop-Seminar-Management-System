@@ -1,0 +1,9 @@
+$kind: http-request
+url: http://localhost:5000/api/users?role=&q=sys&page=1&limit=5
+method: GET
+queryParams:
+  role: ""
+  q: sys
+  page: "1"
+  limit: "5"
+order: 1000

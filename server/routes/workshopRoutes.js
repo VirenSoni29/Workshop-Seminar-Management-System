@@ -1,4 +1,4 @@
-import express from 'express';
+import { Router } from 'express';
 import {
    createWorkshop,
    getWorkshops,
@@ -20,7 +20,7 @@ import {
    rejectRules
 } from '../validators/workshopValidator.js';
 
-const router = express.Router();
+const router = Router();
 
 // Every workshop route needs a logged-in user
 router.use(protect);
