@@ -1,0 +1,610 @@
+/* ==========================================================================
+   pages.css — styles that belong to one page rather than a reusable component
+
+   Sections are added as each mockup is approved:
+     1. Landing
+     2. Auth (login, signup)
+   Import order: tokens, base, components, layout, pages.
+   ========================================================================== */
+
+@layer components {
+  [id] {
+    scroll-margin-top: calc(var(--navbar-h) + var(--sp-4));
+  }
+
+  @media (max-width: 520px) {
+    .hide-xs {
+      display: none !important;
+    }
+  }
+
+  /* ======================================================================
+     1. Landing
+     ====================================================================== */
+
+  /* ---------- Hero ---------- */
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: var(--sp-12);
+    align-items: center;
+    padding-block: var(--sp-16) var(--sp-20);
+  }
+
+  .hero__title {
+    font-size: clamp(2.25rem, 3.4vw + 1rem, 3.5rem);
+    line-height: var(--lh-display);
+    letter-spacing: -0.035em;
+  }
+
+  .hero__lead {
+    max-width: 46ch;
+    margin-top: var(--sp-5);
+    color: var(--ink-2);
+    font-size: var(--fs-lg);
+  }
+
+  .hero__actions {
+    margin-top: var(--sp-8);
+  }
+
+  .hero__note {
+    margin-top: var(--sp-5);
+    color: var(--ink-3);
+    font-size: var(--fs-sm);
+  }
+
+  .hero__visual {
+    display: grid;
+    justify-items: center;
+  }
+
+  @media (max-width: 960px) {
+    .hero {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--sp-10);
+      padding-block: var(--sp-10) var(--sp-12);
+    }
+  }
+
+  /* ---------- Hero ticket (the one memorable element) ----------
+     Horizontal ticket: details on the left, QR stub on the right,
+     a dashed tear with notches between them. */
+  .ticket {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 2px 9.5rem;
+    width: 100%;
+    max-width: 34rem;
+    overflow: hidden;
+    /* clips the tear notches to the card edge */
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-modal);
+    box-shadow: var(--elev-3);
+    transform: rotate(-1.5deg);
+  }
+
+  .ticket__main {
+    display: grid;
+    align-content: start;
+    gap: var(--sp-4);
+    padding: var(--sp-6);
+  }
+
+  .ticket__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+  }
+
+  .ticket__title {
+    font-size: var(--fs-xl);
+    line-height: var(--lh-heading);
+  }
+
+  .ticket__facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--sp-3) var(--sp-5);
+    margin: 0;
+  }
+
+  .ticket__facts dt {
+    color: var(--ink-3);
+    font-size: var(--fs-xs);
+  }
+
+  .ticket__facts dd {
+    margin: 0;
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-medium);
+  }
+
+  .ticket__facts .span-2 {
+    grid-column: 1 / -1;
+  }
+
+  .ticket__tear {
+    position: relative;
+    margin-block: var(--sp-5);
+    border-left: 2px dashed var(--border-strong);
+  }
+
+  .ticket__tear::before,
+  .ticket__tear::after {
+    content: "";
+    position: absolute;
+    left: calc(-0.75rem - 1px);
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--bg);
+  }
+
+  .ticket__tear::before {
+    top: calc(-1 * var(--sp-5) - 0.75rem);
+  }
+
+  .ticket__tear::after {
+    bottom: calc(-1 * var(--sp-5) - 0.75rem);
+  }
+
+  .ticket__stub {
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: var(--sp-3);
+    padding: var(--sp-5) var(--sp-4);
+    text-align: center;
+  }
+
+  .ticket__stub .qr-frame {
+    padding: var(--sp-2);
+    box-shadow: none;
+    border: 1px solid var(--border);
+  }
+
+  .ticket__stub .qr-frame svg {
+    width: 6.5rem;
+    height: 6.5rem;
+  }
+
+  .ticket__stub p {
+    color: var(--ink-3);
+    font-size: var(--fs-xs);
+  }
+
+  /* Narrow screens: the stub drops below the details and the tear turns horizontal */
+  @media (max-width: 520px) {
+    .ticket {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto 2px auto;
+    }
+
+    .ticket__tear {
+      margin: 0 var(--sp-5);
+      border-left: 0;
+      border-top: 2px dashed var(--border-strong);
+    }
+
+    .ticket__tear::before,
+    .ticket__tear::after {
+      top: calc(-0.75rem - 1px);
+      bottom: auto;
+    }
+
+    .ticket__tear::before {
+      left: calc(-1 * var(--sp-5) - 0.75rem);
+    }
+
+    .ticket__tear::after {
+      left: auto;
+      right: calc(-1 * var(--sp-5) - 0.75rem);
+    }
+  }
+
+  /* ---------- Shared landing section chrome ---------- */
+  .landing-section {
+    padding-block: var(--sp-16);
+  }
+
+  .landing-heading {
+    max-width: 22ch;
+  }
+
+  .landing-intro {
+    max-width: var(--reading-max);
+    margin-top: var(--sp-3);
+    color: var(--ink-2);
+  }
+
+  /* ---------- Steps (a real sequence, so numbered) ---------- */
+  .steps {
+    counter-reset: step;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--sp-6);
+    margin: var(--sp-10) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .steps__item {
+    counter-increment: step;
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: var(--sp-2);
+    padding-top: var(--sp-12);
+  }
+
+  .steps__item::before {
+    content: counter(step);
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--on-accent);
+    font-family: var(--font-display);
+    font-weight: var(--fw-bold);
+  }
+
+  .steps__item:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 1.0625rem;
+    left: 2.75rem;
+    right: calc(-1 * var(--sp-6) + 0.5rem);
+    height: 2px;
+    background: var(--border-strong);
+  }
+
+  .steps__item h3 {
+    font-size: var(--fs-lg);
+  }
+
+  .steps__item p {
+    color: var(--ink-2);
+    font-size: var(--fs-sm);
+  }
+
+  @media (max-width: 960px) {
+    .steps {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .steps__item::after {
+      display: none;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .steps {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  /* ---------- Roles ---------- */
+  .roles-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: var(--sp-12);
+    align-items: start;
+  }
+
+  .roles {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--border-strong);
+  }
+
+  .roles__item {
+    display: grid;
+    grid-template-columns: 6.5rem minmax(0, 1fr);
+    gap: var(--sp-4);
+    padding: var(--sp-5) 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .roles__item .badge {
+    justify-self: start;
+    align-self: start;
+  }
+
+  .roles__item h3 {
+    font-size: var(--fs-lg);
+  }
+
+  .roles__item p {
+    margin-top: var(--sp-1);
+    color: var(--ink-2);
+  }
+
+  @media (max-width: 960px) {
+    .roles-layout {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--sp-8);
+    }
+  }
+
+  @media (max-width: 520px) {
+    .roles__item {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--sp-2);
+    }
+  }
+
+  /* ---------- Verify band ---------- */
+  .verify-band {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--sp-8);
+    align-items: center;
+    padding: var(--sp-10);
+    background: var(--accent-soft);
+    border: 1px solid var(--accent-border);
+    border-radius: var(--radius-modal);
+  }
+
+  .verify-band p {
+    margin-top: var(--sp-2);
+    color: var(--ink-2);
+  }
+
+  .verify-form {
+    display: flex;
+    gap: var(--sp-2);
+  }
+
+  .verify-form .input-wrap {
+    flex: 1;
+  }
+
+  @media (max-width: 960px) {
+    .verify-band {
+      grid-template-columns: minmax(0, 1fr);
+      padding: var(--sp-6);
+    }
+  }
+
+  @media (max-width: 520px) {
+    .verify-form {
+      flex-direction: column;
+    }
+  }
+
+  /* ======================================================================
+     2. Auth (login, signup)
+     Form on the left, a quiet info panel on the right. On narrow screens
+     the panel drops below the form.
+     ====================================================================== */
+  .auth {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 28rem);
+    min-height: 100vh;
+  }
+
+  .auth__main {
+    display: flex;
+    flex-direction: column;
+    padding: var(--sp-6) var(--sp-8) var(--sp-10);
+  }
+
+  .auth__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .auth__center {
+    display: grid;
+    flex: 1;
+    align-content: center;
+    width: 100%;
+    max-width: 28rem;
+    margin-inline: auto;
+    padding-block: var(--sp-8);
+  }
+
+  .auth__center--wide {
+    max-width: 34rem;
+  }
+
+  .auth__head {
+    margin-bottom: var(--sp-8);
+  }
+
+  .auth__head p {
+    margin-top: var(--sp-2);
+    color: var(--ink-2);
+  }
+
+  .auth__form {
+    display: grid;
+    gap: var(--sp-5);
+  }
+
+  .auth__switch {
+    margin-top: var(--sp-6);
+    color: var(--ink-2);
+    font-size: var(--fs-sm);
+    text-align: center;
+  }
+
+  .auth__aside {
+    display: grid;
+    align-content: center;
+    gap: var(--sp-6);
+    padding: var(--sp-12) var(--sp-8);
+    background: var(--surface-2);
+    border-left: 1px solid var(--border);
+  }
+
+  .auth__aside h2 {
+    font-size: var(--fs-xl);
+  }
+
+  .auth__aside>p {
+    margin-top: calc(-1 * var(--sp-3));
+    color: var(--ink-2);
+  }
+
+  /* Rows in the aside: demo accounts (login) and role notes (signup) */
+  .aside-list {
+    display: grid;
+    gap: var(--sp-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .aside-item {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    padding: var(--sp-3) var(--sp-4);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+  }
+
+  .aside-item--top {
+    align-items: flex-start;
+  }
+
+  .aside-item__text {
+    flex: 1;
+    min-width: 0;
+    font-size: var(--fs-sm);
+  }
+
+  .aside-item__text strong {
+    display: block;
+  }
+
+  .aside-item__text span {
+    color: var(--ink-2);
+    overflow-wrap: anywhere;
+  }
+
+  @media (max-width: 960px) {
+    .auth {
+      grid-template-columns: minmax(0, 1fr);
+      min-height: 0;
+    }
+
+    .auth__main {
+      padding: var(--sp-5) var(--sp-4) var(--sp-8);
+    }
+
+    .auth__aside {
+      padding: var(--sp-8) var(--sp-4);
+      border-left: 0;
+      border-top: 1px solid var(--border);
+    }
+  }
+
+  .workshop-card__banner--ml {
+    background: linear-gradient(115deg, #f8e6d6 0%, #f3d7c1 58%, #e7b58f 100%);
+    color: #9a4b20;
+  }
+
+  .workshop-card__banner--design {
+    background: linear-gradient(115deg, #f0eafa 0%, #e4dcf3 58%, #c9bce4 100%);
+    color: #65538f;
+  }
+
+  .workshop-card__banner--career {
+    background: linear-gradient(115deg, #e9f0e5 0%, #d7e5d2 58%, #b6cfb0 100%);
+    color: #486b4b;
+  }
+
+  .workshop-card__banner {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: var(--sp-4) var(--sp-5);
+    min-height: 8.5rem;
+    aspect-ratio: auto;
+  }
+
+  .workshop-card__banner>svg {
+    width: 3rem;
+    height: 3rem;
+    opacity: .82;
+    stroke-width: 1.7;
+    margin: 0 .25rem .15rem 0;
+  }
+
+  .workshop-card__banner .badge {
+    position: absolute;
+    top: var(--sp-3);
+    right: var(--sp-3);
+  }
+
+  .workshop-card__date {
+    display: grid;
+    place-items: center;
+    min-width: 3.35rem;
+    padding: .45rem .55rem;
+    border-radius: var(--radius-control);
+    background: var(--accent);
+    color: #fff;
+    box-shadow: var(--elev-1);
+    line-height: 1.05;
+  }
+
+  .workshop-card__date strong {
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    font-weight: var(--fw-bold);
+  }
+
+  .workshop-card__date span {
+    margin-top: .2rem;
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+  }
+
+  .workshop-card__body {
+    gap: var(--sp-3);
+  }
+
+  .workshop-card__tags {
+    align-items: center;
+  }
+
+  .workshop-card__title {
+    min-height: 2.8em;
+  }
+
+  .workshop-card__speaker {
+    margin: 0;
+  }
+
+  .workshop-card .meta-list {
+    gap: var(--sp-2);
+  }
+
+  .workshop-card .seats {
+    margin-top: auto;
+    padding-top: var(--sp-2);
+  }
+
+  .workshop-card .workshop-card__footer {
+    margin-top: 0;
+  }
+
+  .workshop-card .workshop-card__footer .btn {
+    white-space: nowrap;
+  }
+}

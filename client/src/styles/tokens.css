@@ -1,0 +1,189 @@
+/* ==========================================================================
+   tokens.css — design tokens (light + dark)
+
+   Every colour, size, radius and shadow used in the app lives here.
+   Components never hard-code values; they read these variables.
+
+   Theme switching: <html data-theme="light"> or <html data-theme="dark">.
+   A tiny script in index.html sets the attribute before first paint.
+
+   Layer order is declared first so plain-HTML mockups and the React app
+   (with Tailwind) resolve conflicts the same way:
+     theme < base < components < utilities   (utilities always win)
+
+   Token names are deliberately NOT the same as Tailwind's defaults
+   (--color-*, --radius-md, --shadow-md, --text-sm ...) so the two never clash.
+   ========================================================================== */
+
+@layer theme, base, components, utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+
+    /* ---------- Typography ---------- */
+    --font-display: "Bricolage Grotesque", "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-code: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+    /* Type scale (ratio ~1.25) */
+    --fs-xs: 0.75rem;
+    --fs-sm: 0.875rem;
+    --fs-md: 1rem;
+    --fs-lg: 1.125rem;
+    --fs-xl: 1.375rem;
+    --fs-2xl: 1.75rem;
+    --fs-3xl: 2.25rem;
+    --fs-4xl: 3rem;
+    --fs-5xl: 4rem; /* landing hero only */
+
+    --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-semibold: 600;
+    --fw-bold: 700;
+
+    --lh-display: 1.1;
+    --lh-heading: 1.25;
+    --lh-body: 1.55;
+
+    /* ---------- Spacing (4px base) ---------- */
+    --sp-1: 0.25rem;
+    --sp-2: 0.5rem;
+    --sp-3: 0.75rem;
+    --sp-4: 1rem;
+    --sp-5: 1.25rem;
+    --sp-6: 1.5rem;
+    --sp-8: 2rem;
+    --sp-10: 2.5rem;
+    --sp-12: 3rem;
+    --sp-16: 4rem;
+    --sp-20: 5rem;
+
+    /* ---------- Radius: grows with the size of the surface ---------- */
+    --radius-chip: 6px;     /* small tags, kbd */
+    --radius-control: 10px; /* buttons, inputs, selects */
+    --radius-card: 16px;    /* cards, panels, tables */
+    --radius-modal: 22px;   /* modals, popovers, hero panels */
+    --radius-pill: 999px;   /* badges, avatars */
+
+    /* ---------- Layout ---------- */
+    --navbar-h: 64px;
+    --sidebar-w: 260px;
+    --content-max: 1200px;
+    --reading-max: 68ch;
+
+    /* ---------- Stacking ---------- */
+    --z-sticky: 40;
+    --z-overlay: 100;
+    --z-toast: 200;
+
+    /* ---------- Motion ---------- */
+    --motion-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+    --motion-fast: 120ms;
+    --motion-base: 200ms;
+
+    /* ---------- Colour: surfaces & text (light, warm neutrals) ---------- */
+    --bg: #f8f5f2;          /* page background (warm, so the orange belongs) */
+    --surface: #ffffff;     /* cards, navbar, modals */
+    --surface-2: #f1ece6;   /* table header, inset panels */
+    --surface-3: #e8e1d9;   /* hover on surface-2 */
+    --border: #e8e2db;
+    --border-strong: #d5ccc2;
+
+    --ink: #1f1a17;         /* primary text */
+    --ink-2: #5c534b;       /* secondary text */
+    --ink-3: #766c63;       /* muted text, placeholders */
+
+    /* ---------- Colour: accent (burnt orange) ----------
+       --accent fills buttons and highlights, with white text on top (~4.7:1).
+       --accent-text is the same hue for links and text on light surfaces. */
+    --accent: #cc470a;
+    --accent-hover: #b53f08;
+    --accent-active: #9f3706;
+    --on-accent: #ffffff;
+    --accent-text: #b33d07;
+    --accent-soft: #fdebdd;    /* tinted backgrounds (active nav item, verify band) */
+    --accent-border: #f5c7a5;
+    --ring: #cc470a;           /* keyboard focus ring */
+
+    /* ---------- Colour: semantic status ---------- */
+    --success-fg: #0f6b3e;
+    --success-bg: #ddf4e6;
+    --warning-fg: #7a4b00;
+    --warning-bg: #fff1cc;
+    --danger-fg: #a4161a;
+    --danger-bg: #fde4e3;
+    --info-fg: #1d4ed8;
+    --info-bg: #e1eafe;
+    --neutral-fg: #5c534b;
+    --neutral-bg: #ede8e2;
+
+    --danger-solid: #d92d20;   /* destructive button fill (white text) */
+    --danger-solid-hover: #b42318;
+
+    /* ---------- Elevation (shadows tinted warm) ---------- */
+    --elev-1: 0 1px 2px rgba(60, 35, 15, 0.07), 0 1px 1px rgba(60, 35, 15, 0.04);
+    --elev-2: 0 4px 12px -2px rgba(60, 35, 15, 0.11), 0 2px 4px rgba(60, 35, 15, 0.05);
+    --elev-3: 0 18px 40px -12px rgba(60, 35, 15, 0.3);
+    --overlay: rgba(31, 22, 16, 0.55);
+
+    /* ---------- Chart palette (Recharts) ---------- */
+    --chart-1: #cc470a;
+    --chart-2: #3b6fe0;
+    --chart-3: #12a594;
+    --chart-4: #8b5cf6;
+    --chart-5: #e5a50a;
+    --chart-grid: #e8e2db;
+    --chart-axis: #766c63;
+  }
+
+  /* ======================= DARK THEME ======================= */
+  [data-theme="dark"] {
+    color-scheme: dark;
+
+    --bg: #17120f;
+    --surface: #1f1915;
+    --surface-2: #2a221c;
+    --surface-3: #352b24;
+    --border: #3a3029;
+    --border-strong: #50433a;
+
+    --ink: #f6f1ec;
+    --ink-2: #cdc2b8;
+    --ink-3: #a0948a;
+
+    /* Same burnt-orange button with white text as light mode */
+    --accent: #cc470a;
+    --accent-hover: #b53f08;
+    --accent-active: #9f3706;
+    --on-accent: #ffffff;
+    --accent-text: #ff9a5c;
+    --accent-soft: rgba(255, 138, 61, 0.14);
+    --accent-border: rgba(255, 138, 61, 0.4);
+    --ring: #ff8a3d;
+
+    --success-fg: #6ee7a0;
+    --success-bg: rgba(52, 211, 120, 0.14);
+    --warning-fg: #fbbf4a;
+    --warning-bg: rgba(251, 191, 74, 0.14);
+    --danger-fg: #ff8a85;
+    --danger-bg: rgba(255, 99, 92, 0.15);
+    --info-fg: #8ab4ff;
+    --info-bg: rgba(96, 150, 255, 0.15);
+    --neutral-fg: #cdc2b8;
+    --neutral-bg: rgba(205, 194, 184, 0.12);
+
+    --elev-1: 0 1px 2px rgba(0, 0, 0, 0.45);
+    --elev-2: 0 6px 16px -4px rgba(0, 0, 0, 0.55);
+    --elev-3: 0 24px 48px -12px rgba(0, 0, 0, 0.7);
+    --overlay: rgba(8, 5, 3, 0.72);
+
+    --chart-1: #ff8a3d;
+    --chart-2: #6c97f0;
+    --chart-3: #2dc4b2;
+    --chart-4: #a78bfa;
+    --chart-5: #f2b930;
+    --chart-grid: #3a3029;
+    --chart-axis: #a0948a;
+  }
+}

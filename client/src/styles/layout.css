@@ -1,0 +1,290 @@
+/* ==========================================================================
+   layout.css — page structure
+
+   Import this AFTER components.css: it uses the same layer and relies on
+   source order to override .btn's display on the mobile menu button.
+
+   Dashboard pages (student / faculty / admin):
+     <div class="app-shell">
+       <header class="navbar"> ... </header>
+       <div class="app-body">
+         <aside class="sidebar"> ... </aside>
+         <main class="app-main"><div class="app-content"> page </div></main>
+       </div>
+       <div class="sidebar-backdrop"></div>
+     </div>
+
+   Public pages (landing, login, verify): .navbar + .wrap sections, no sidebar.
+   ========================================================================== */
+
+@layer components {
+  /* ---------- Containers ---------- */
+  .wrap {
+    width: 100%;
+    max-width: var(--content-max);
+    margin-inline: auto;
+    padding-inline: var(--sp-6);
+  }
+  @media (max-width: 640px) {
+    .wrap { padding-inline: var(--sp-4); }
+  }
+
+  /* ======================================================================
+     Navbar
+     ====================================================================== */
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+    height: var(--navbar-h);
+    background: color-mix(in srgb, var(--surface) 92%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .navbar__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+    height: 100%;
+    padding-inline: var(--sp-6);
+  }
+  .navbar__inner--contained {
+    max-width: var(--content-max);
+    margin-inline: auto;
+  }
+  .navbar__links { display: flex; gap: var(--sp-1); margin-left: var(--sp-4); }
+  .navbar__link {
+    padding: var(--sp-2) var(--sp-3);
+    border-radius: var(--radius-control);
+    color: var(--ink-2);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-medium);
+    text-decoration: none;
+  }
+  .navbar__link:hover { background: var(--surface-2); color: var(--ink); text-decoration: none; }
+  .navbar__link.is-active, .navbar__link.active { background: var(--surface-2); color: var(--ink); }
+  .navbar__spacer { flex: 1; }
+  .navbar__actions { display: flex; align-items: center; gap: var(--sp-2); }
+  .navbar__menu-btn { display: none; }
+
+  @media (max-width: 720px) {
+    .navbar__links { display: none; }
+    .navbar__inner { padding-inline: var(--sp-4); }
+  }
+  @media (max-width: 960px) {
+    .navbar__menu-btn { display: inline-flex; }
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: var(--fs-lg);
+    font-weight: var(--fw-bold);
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+  .brand:hover { text-decoration: none; }
+  .brand__mark {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--radius-control);
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+  .brand__mark svg { width: 1.125rem; height: 1.125rem; }
+
+  /* ======================================================================
+     App shell: sidebar + content
+     ====================================================================== */
+  .app-body {
+    display: grid;
+    grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+    align-items: start;
+  }
+  .app-main { min-width: 0; }
+  .app-content {
+    max-width: var(--content-max);
+    margin-inline: auto;
+    padding: var(--sp-8) var(--sp-6) var(--sp-16);
+  }
+
+  .sidebar {
+    position: sticky;
+    top: var(--navbar-h);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-6);
+    height: calc(100vh - var(--navbar-h));
+    padding: var(--sp-5) var(--sp-4);
+    overflow-y: auto;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+  }
+  .sidebar__group { display: grid; gap: var(--sp-1); }
+  .sidebar__heading {
+    margin-bottom: var(--sp-1);
+    padding: 0 var(--sp-3);
+    color: var(--ink-3);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+  }
+  .sidebar__link {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    padding: var(--sp-2) var(--sp-3);
+    border-radius: var(--radius-control);
+    color: var(--ink-2);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-medium);
+    text-decoration: none;
+  }
+  .sidebar__link svg { width: 1.25rem; height: 1.25rem; flex-shrink: 0; }
+  .sidebar__link:hover { background: var(--surface-2); color: var(--ink); text-decoration: none; }
+  /* NavLink adds "active" automatically; .is-active is for the static mockups */
+  .sidebar__link.is-active,
+  .sidebar__link.active {
+    background: var(--accent-soft);
+    color: var(--accent-text);
+    font-weight: var(--fw-semibold);
+    box-shadow: inset 3px 0 0 var(--accent);
+  }
+  .sidebar__count {
+    margin-left: auto;
+    min-width: 1.4rem;
+    padding: 0 0.4rem;
+    border-radius: var(--radius-pill);
+    background: var(--accent);
+    color: var(--on-accent);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-bold);
+    line-height: 1.4rem;
+    text-align: center;
+  }
+  .sidebar__footer {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    margin-top: auto;
+    padding: var(--sp-3);
+    background: var(--surface-2);
+    border-radius: var(--radius-card);
+    min-width: 0;
+  }
+  .sidebar__footer small { display: block; color: var(--ink-3); overflow-wrap: anywhere; }
+
+  .sidebar-backdrop { display: none; }
+
+  @media (max-width: 960px) {
+    .app-body { grid-template-columns: minmax(0, 1fr); }
+    .app-content { padding: var(--sp-5) var(--sp-4) var(--sp-12); }
+
+    .sidebar {
+      position: fixed;
+      top: var(--navbar-h);
+      bottom: 0;
+      left: 0;
+      z-index: var(--z-overlay);
+      width: min(var(--sidebar-w), 85vw);
+      height: auto;
+      transform: translateX(-100%);
+      transition: transform var(--motion-base) var(--motion-ease);
+    }
+    .sidebar.is-open { transform: none; box-shadow: var(--elev-3); }
+
+    .sidebar-backdrop.is-open {
+      display: block;
+      position: fixed;
+      inset: var(--navbar-h) 0 0 0;
+      z-index: calc(var(--z-overlay) - 1);
+      background: var(--overlay);
+    }
+  }
+
+  /* ======================================================================
+     Page header and sections
+     ====================================================================== */
+  .page-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    margin-bottom: var(--sp-8);
+  }
+  .page-header__text p { margin-top: var(--sp-1); color: var(--ink-2); }
+  .page-header__actions { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-1);
+    margin-bottom: var(--sp-3);
+    color: var(--ink-2);
+    font-size: var(--fs-sm);
+    text-decoration: none;
+  }
+  .back-link:hover { color: var(--ink); text-decoration: none; }
+  .back-link svg { width: 1rem; height: 1rem; }
+
+  .section { margin-top: var(--sp-10); }
+  .section__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--sp-3);
+    margin-bottom: var(--sp-4);
+  }
+
+  /* ======================================================================
+     Grids and spacing helpers
+     ====================================================================== */
+  .grid-cards {
+    display: grid;
+    gap: var(--sp-6);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+  }
+  .grid-stats {
+    display: grid;
+    gap: var(--sp-4);
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  }
+  .grid-2 {
+    display: grid;
+    gap: var(--sp-6);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  /* Main column + side panel (workshop details) */
+  .split {
+    display: grid;
+    gap: var(--sp-6);
+    align-items: start;
+    grid-template-columns: minmax(0, 1fr) 22rem;
+  }
+  @media (max-width: 960px) {
+    .grid-2, .split { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  .stack { display: flex; flex-direction: column; gap: var(--stack-gap, var(--sp-4)); }
+  .cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--cluster-gap, var(--sp-3)); }
+  .row-between { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); }
+
+  .text-muted { color: var(--ink-3); }
+  .text-secondary { color: var(--ink-2); }
+
+  .site-footer {
+    padding: var(--sp-8) 0;
+    border-top: 1px solid var(--border);
+    color: var(--ink-3);
+    font-size: var(--fs-sm);
+  }
+
+  .dashboard-toolbar { display: flex; align-items: center; gap: var(--sp-3); }
+.user-menu { position: relative; }
+.user-menu .menu { right: 0; left: auto; min-width: 12rem; }
+}
