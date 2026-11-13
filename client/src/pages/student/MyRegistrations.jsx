@@ -13,9 +13,9 @@ import StatCard from "../../components/common/StatCard";
 import StatusBadge from "../../components/common/StatusBadge";
 import DataTable from "../../components/common/DataTable";
 import QRModal from "../../components/workshop/QRModal";
+import QRCode from "qrcode";
 import {
    getMyRegistrationsApi,
-   getRegistrationQrApi,
 } from "../../api/registrations.api";
 import { formatDate, formatTime } from "../../utils/formatDate";
 import { getErrorMessage } from "../../utils/getErrorMessage";
@@ -54,10 +54,19 @@ export default function MyRegistrations() {
       setQrOpen(true);
       setQr({ loading: true, error: null, data: null });
       try {
-         const res = await getRegistrationQrApi(reg._id);
-         setQr({ loading: false, error: null, data: res.data.data });
+         if (!reg.qrToken) throw new Error("QR is not available for this registration.");
+         const qrImage = await QRCode.toDataURL(reg.qrToken, {
+            width: 280,
+            margin: 1,
+            errorCorrectionLevel: "M",
+         });
+         setQr({
+            loading: false,
+            error: null,
+            data: { qrToken: reg.qrToken, qrImage, workshop: reg.workshop },
+         });
       } catch (err) {
-         const message = getErrorMessage(err);
+         const message = err?.response ? getErrorMessage(err) : err.message;
          setQr({ loading: false, error: message, data: null });
          notify.error(message);
       }

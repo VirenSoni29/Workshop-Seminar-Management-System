@@ -6,7 +6,6 @@ import useForm from "../../hooks/useForm";
 import FormInput from "../../components/forms/FormInput";
 import ThemeToggle from "../../components/common/ThemeToggle";
 import StatusBadge from "../../components/common/StatusBadge";
-import { Spinner } from "../../components/common/Loader";
 import { loginSchema } from "../../utils/validationSchemas";
 import { getErrorMessage, getFieldErrors } from "../../utils/getErrorMessage";
 
@@ -116,7 +115,6 @@ export default function Login() {
                      type="submit"
                      disabled={form.isSubmitting}
                   >
-                     {form.isSubmitting && <Spinner />}
                      Log in
                   </button>
                </form>

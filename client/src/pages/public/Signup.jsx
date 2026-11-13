@@ -16,7 +16,6 @@ import FormInput from "../../components/forms/FormInput";
 import FormSelect from "../../components/forms/FormSelect";
 import ThemeToggle from "../../components/common/ThemeToggle";
 import StatusBadge from "../../components/common/StatusBadge";
-import { Spinner } from "../../components/common/Loader";
 import { signupSchema } from "../../utils/validationSchemas";
 import { getErrorMessage, getFieldErrors } from "../../utils/getErrorMessage";
 import { ID_LABEL_BY_ROLE } from "../../utils/constants";
@@ -174,7 +173,6 @@ export default function Signup() {
                      disabled={form.isSubmitting}
                      style={{ marginTop: "var(--sp-6)" }}
                   >
-                     {form.isSubmitting && <Spinner />}
                      Create account
                   </button>
                </form>

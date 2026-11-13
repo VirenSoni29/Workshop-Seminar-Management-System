@@ -13,6 +13,12 @@ import Browse from '../pages/student/Browse';
 import WorkshopDetails from '../pages/student/WorkshopDetails';
 import MyRegistrations from '../pages/student/MyRegistrations';
 import MyCertificates from '../pages/student/MyCertificates';
+import VerifyCertificate from '../pages/public/VerifyCertificate';
+import FacultyDashboard from '../pages/faculty/FacultyDashboard';
+import MyWorkshops from '../pages/faculty/MyWorkshops';
+import WorkshopForm from '../pages/faculty/WorkshopForm';
+import AttendeeList from '../pages/faculty/AttendeeList';
+import QRScanner from '../pages/faculty/QRScanner';
 
 // TEMPORARY: replace each todo('...') with the real page as we build it.
 const Placeholder = ({ name }) => (
@@ -33,7 +39,7 @@ export default function AppRoutes() {
          {/* Public, with the landing header/footer */}
          <Route element={<PublicLayout />}>
             <Route path="/" element={<Landing />} />
-            <Route path="/verify/:certificateId" element={todo('Verify certificate')} />
+            <Route path="/verify/:certificateId" element={<VerifyCertificate />} />
          </Route>
 
          {/* Guests only (own .auth shell, no layout) */}
@@ -62,12 +68,12 @@ export default function AppRoutes() {
 
                {/* faculty + admin */}
                <Route element={<RoleRoute roles={[FACULTY, ADMIN]} />}>
-                  <Route path="/faculty/dashboard" element={todo('Faculty dashboard')} />
-                  <Route path="/faculty/workshops" element={todo('My workshops')} />
-                  <Route path="/faculty/workshops/new" element={todo('Create workshop')} />
-                  <Route path="/faculty/workshops/:id/edit" element={todo('Edit workshop')} />
-                  <Route path="/faculty/workshops/:id/attendees" element={todo('Attendee list')} />
-                  <Route path="/faculty/scan" element={todo('QR scanner')} />
+                  <Route path="/faculty/dashboard" element={<FacultyDashboard />} />
+                  <Route path="/faculty/workshops" element={<MyWorkshops />} />
+                  <Route path="/faculty/workshops/new" element={<WorkshopForm />} />
+                  <Route path="/faculty/workshops/:id/edit" element={<WorkshopForm />} />
+                  <Route path="/faculty/workshops/:id/attendees" element={<AttendeeList />} />
+                  <Route path="/faculty/scan" element={<QRScanner />} />
                </Route>
 
                {/* admin */}
