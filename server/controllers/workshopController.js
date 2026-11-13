@@ -2,6 +2,7 @@ import Workshop, { STATUS_TRANSITIONS } from '../models/workshop.js';
 import Registration from '../models/registration.js';
 import asyncHandler from '../utils/asyncHandler.js';
 import { sendSuccess, sendError } from '../utils/response.js';
+import { logActivity } from '../models/activity.js';
 
 // Fields a user is allowed to set. Never includes status, createdBy, registeredCount, adminRemarks.
 const EDITABLE_FIELDS = [
@@ -166,6 +167,9 @@ export const deleteWorkshop = asyncHandler(async (req, res) => {
       });
    }
 
+   // delete (before or after deleting, you must have the title in hand)
+   logActivity({ actor: req.user._id, action: 'workshop.deleted', entityType: 'workshop', entityId: workshop._id, entityLabel: workshop.title });
+
    await workshop.deleteOne();
 
    return sendSuccess(res, { message: 'Workshop deleted' });
@@ -220,6 +224,9 @@ export const submitWorkshop = asyncHandler(async (req, res) => {
    workshop.adminRemarks = undefined; // clear old rejection remarks on resubmit
    await workshop.save();
 
+   // submit
+   logActivity({ actor: req.user._id, action: 'workshop.submitted', entityType: 'workshop', entityId: workshop._id, entityLabel: workshop.title });
+
    return sendSuccess(res, { message: 'Submitted for admin approval', data: workshop });
 });
 
@@ -231,6 +238,9 @@ export const approveWorkshop = asyncHandler(async (req, res) => {
    workshop.status = 'approved';
    workshop.adminRemarks = req.body?.remarks || undefined;
    await workshop.save();
+
+   // approve
+   logActivity({ actor: req.user._id, action: 'workshop.approved', entityType: 'workshop', entityId: workshop._id, entityLabel: workshop.title });
 
    return sendSuccess(res, { message: 'Workshop approved', data: workshop });
 });
@@ -244,6 +254,9 @@ export const rejectWorkshop = asyncHandler(async (req, res) => {
    workshop.adminRemarks = req.body.remarks;
    await workshop.save();
 
+   // reject (use whatever your remarks variable is called)
+   logActivity({ actor: req.user._id, action: 'workshop.rejected', entityType: 'workshop', entityId: workshop._id, entityLabel: workshop.title, details: req.body.remarks });
+
    return sendSuccess(res, { message: 'Workshop rejected', data: workshop });
 });
 
@@ -254,6 +267,9 @@ export const completeWorkshop = asyncHandler(async (req, res) => {
 
    workshop.status = 'completed';
    await workshop.save();
+
+   // complete
+   logActivity({ actor: req.user._id, action: 'workshop.completed', entityType: 'workshop', entityId: workshop._id, entityLabel: workshop.title });
 
    return sendSuccess(res, { message: 'Workshop marked as completed', data: workshop });
 });
@@ -271,6 +287,9 @@ export const cancelWorkshop = asyncHandler(async (req, res) => {
       { workshop: workshop._id, status: { $in: ['registered', 'waitlisted'] } },
       { $set: { status: 'cancelled', cancelledAt: new Date() } }
    );
+
+   // cancel
+   logActivity({ actor: req.user._id, action: 'workshop.cancelled', entityType: 'workshop', entityId: workshop._id, entityLabel: workshop.title });
 
    return sendSuccess(res, { message: 'Workshop cancelled', data: workshop });
 });

@@ -14,6 +14,7 @@ import checkinRoutes from './routes/checkinRoutes.js';
 import certificateRoutes from './routes/certificateRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import statsRoutes from './routes/statsRoutes.js';
+import activityRoutes from './routes/activityRoutes.js';
 
 const app = express();
 
@@ -45,6 +46,7 @@ app.use('/api/checkin', checkinRoutes);
 app.use('/api/certificates', certificateRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/stats', statsRoutes);
+app.use('/api/activity', activityRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

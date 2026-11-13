@@ -1,4 +1,4 @@
-import {Router} from 'express';
+import { Router } from 'express';
 import { getStats } from '../controllers/statsController.js';
 import { protect, authorize } from '../middleware/auth.js';
 

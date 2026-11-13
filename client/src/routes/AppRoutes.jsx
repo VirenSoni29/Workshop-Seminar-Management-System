@@ -19,17 +19,24 @@ import MyWorkshops from '../pages/faculty/MyWorkshops';
 import WorkshopForm from '../pages/faculty/WorkshopForm';
 import AttendeeList from '../pages/faculty/AttendeeList';
 import QRScanner from '../pages/faculty/QRScanner';
+import AdminDashboard from '../pages/admin/AdminDashboard';
+import PendingApprovals from '../pages/admin/PendingApprovals';
+import AllWorkshops from '../pages/admin/AllWorkshops';
+import ManageUsers from '../pages/admin/ManageUsers';
+import NotFound from '../pages/NotFound';
+import Reports from '../pages/admin/Reports';
+import ActivityLog from '../pages/admin/ActivityLog';
 
 // TEMPORARY: replace each todo('...') with the real page as we build it.
-const Placeholder = ({ name }) => (
-   <div className="card">
-      <div className="card-body">
-         <h2>{name}</h2>
-         <p>Page not built yet.</p>
-      </div>
-   </div>
-);
-const todo = (name) => <Placeholder name={name} />;
+// const Placeholder = ({ name }) => (
+//    <div className="card">
+//       <div className="card-body">
+//          <h2>{name}</h2>
+//          <p>Page not built yet.</p>
+//       </div>
+//    </div>
+// );
+// const todo = (name) => <Placeholder name={name} />;
 
 const { ADMIN, FACULTY, STUDENT } = ROLES;
 
@@ -78,15 +85,17 @@ export default function AppRoutes() {
 
                {/* admin */}
                <Route element={<RoleRoute roles={[ADMIN]} />}>
-                  <Route path="/admin/dashboard" element={todo('Admin dashboard')} />
-                  <Route path="/admin/approvals" element={todo('Pending approvals')} />
-                  <Route path="/admin/workshops" element={todo('All workshops')} />
-                  <Route path="/admin/users" element={todo('Manage users')} />
+                  <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                  <Route path="/admin/approvals" element={<PendingApprovals />} />
+                  <Route path="/admin/workshops" element={<AllWorkshops />} />
+                  <Route path="/admin/users" element={<ManageUsers />} />
+                  <Route path="/admin/reports" element={<Reports />} />
+                  <Route path="/admin/activity" element={<ActivityLog />} />
                </Route>
             </Route>
          </Route>
 
-         <Route path="*" element={todo('404 Not found')} />
+         <Route path="*" element={<NotFound />} />
       </Routes>
    );
 }

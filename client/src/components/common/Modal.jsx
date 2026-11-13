@@ -31,7 +31,7 @@ export default function Modal({
 
    return createPortal(
       <div
-         className="modal-overlay"
+         className="modal-overlay is-open"
          onMouseDown={(e) =>
             closeOnOverlay && e.target === e.currentTarget && onClose?.()
          }

@@ -1,6 +1,7 @@
 import User from '../models/user.js';
 import asyncHandler from '../utils/asyncHandler.js';
 import { sendSuccess, sendError } from '../utils/response.js';
+import { logActivity } from '../models/activity.js';
 
 const escapeRegex = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
@@ -49,8 +50,11 @@ export const updateUserRole = asyncHandler(async (req, res) => {
       return sendError(res, { message: 'User not found', statusCode: 404 });
    }
 
+   const oldRole = user.role;
    user.role = req.body.role;
    await user.save();
+
+   logActivity({ actor: req.user._id, action: 'user.role_changed', entityType: 'user', entityId: user._id, entityLabel: user.name, details: `${oldRole} → ${user.role}` });
 
    return sendSuccess(res, { message: `Role changed to ${user.role}`, data: user });
 });
@@ -72,6 +76,8 @@ export const updateUserStatus = asyncHandler(async (req, res) => {
 
    user.isActive = req.body.isActive;
    await user.save();
+
+   logActivity({ actor: req.user._id, action: user.isActive ? 'user.activated' : 'user.deactivated', entityType: 'user', entityId: user._id, entityLabel: user.name });
 
    return sendSuccess(res, {
       message: user.isActive ? 'User activated' : 'User deactivated',
