@@ -14,19 +14,19 @@ const DEMO_ACCOUNTS = [
       role: "admin",
       title: "Approvals, users, stats",
       email: "admin@college.edu",
-      password: "Admin@123",
+      password: "admin123",
    },
    {
       role: "faculty",
       title: "Workshops, scanner, certificates",
       email: "faculty1@college.edu",
-      password: "Faculty@123",
+      password: "faculty123",
    },
    {
       role: "student",
       title: "Browse, register, QR pass",
       email: "student1@college.edu",
-      password: "Student@123",
+      password: "pass1234",
    },
 ];
 
