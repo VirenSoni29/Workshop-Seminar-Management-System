@@ -127,7 +127,7 @@ VITE_API_URL=http://localhost:5000/api
 
 ### Step 1: Clone the Repository
 ```bash
-git clone https://github.com/<your-username>/Workshop-Seminar-Management-System.git
+git clone https://github.com/VirenSoni29/Workshop-Seminar-Management-System.git
 cd Workshop-Seminar-Management-System
 ```
 
