@@ -5,6 +5,7 @@ const verifyLimiter = rateLimit({
    max: 60,
    standardHeaders: true,
    legacyHeaders: false,
+   validate: { forwardedHeader: false },
    handler: (req, res) =>
       res.status(429).json({
          success: false,
@@ -17,6 +18,7 @@ const authLimiter = rateLimit({
    max: 20,
    standardHeaders: true,
    legacyHeaders: false,
+   validate: { forwardedHeader: false },
    handler: (req, res) =>
       res.status(429).json({
          success: false,
