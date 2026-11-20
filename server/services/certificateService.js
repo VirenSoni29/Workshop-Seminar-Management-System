@@ -1,17 +1,41 @@
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
+import chromium from '@sparticuz/chromium';
+import fs from 'fs';
 import QRCode from 'qrcode';
 import config from '../config/config.js';
+
+const getLocalChrome = () => {
+   const paths = [
+      'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+      'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
+      'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
+      'C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe',
+   ];
+   return paths.find((p) => fs.existsSync(p));
+};
 
 // ---- One shared browser, reused for every PDF (launching per PDF is slow) ----
 let browserPromise = null;
 
-const getBrowser = () => {
+const getBrowser = async () => {
    if (!browserPromise) {
+      const isVercel = Boolean(process.env.VERCEL || config.nodeEnv === 'production');
+
+      const launchOptions = isVercel
+         ? {
+              args: chromium.args,
+              defaultViewport: chromium.defaultViewport,
+              executablePath: await chromium.executablePath(),
+              headless: chromium.headless,
+           }
+         : {
+              executablePath: getLocalChrome(),
+              headless: true,
+              args: ['--no-sandbox', '--disable-setuid-sandbox'],
+           };
+
       browserPromise = puppeteer
-         .launch({
-            headless: true,
-            args: ['--no-sandbox', '--disable-setuid-sandbox'],
-         })
+         .launch(launchOptions)
          .then((browser) => {
             // If Chromium crashes or closes, launch a fresh one next time
             browser.on('disconnected', () => {

@@ -40,6 +40,15 @@ app.get("/api/health", (req, res) => {
    sendSuccess(res, { message: "Workshop Management API is running" });
 });
 
+app.use(async (req, res, next) => {
+   try {
+      await connectDB();
+      next();
+   } catch (err) {
+      next(err);
+   }
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/workshops', workshopRoutes);
 app.use('/api/registrations', registrationRoutes);
