@@ -109,7 +109,11 @@ export default function QRScanner() {
       }
    }, []);
 
+   const [starting, setStarting] = useState(false);
+
    const startScan = async () => {
+      if (scanning || starting) return;
+      setStarting(true);
       setResult(null);
       try {
          const scanner = new Html5Qrcode(READER_ID);
@@ -121,12 +125,14 @@ export default function QRScanner() {
             () => {},
          );
          setScanning(true);
-      } catch {
+      } catch (err) {
          scannerRef.current = null;
          setResult({
             type: "error",
             text: "Could not start the camera. Allow camera access, or use manual check-in below.",
          });
+      } finally {
+         setStarting(false);
       }
    };
 
@@ -201,38 +207,47 @@ export default function QRScanner() {
                </div>
 
                <div className="scanner-stage" id="scanner-stage">
+                  <div
+                     className="scanner-placeholder"
+                     id="scanner-placeholder"
+                     style={{ display: scanning ? "none" : undefined }}
+                  >
+                     <div className="camera-icon">
+                        <Camera style={{ width: "1.6rem", height: "1.6rem" }} />
+                     </div>
+                     <h2>Camera is not active</h2>
+                     <p>
+                        Start the scanner and allow camera access to scan
+                        student registration QR codes.
+                     </p>
+                     <div className="scan-frame">
+                        <span className="scan-corner tl"></span>
+                        <span className="scan-corner tr"></span>
+                        <span className="scan-corner bl"></span>
+                        <span className="scan-corner br"></span>
+                     </div>
+                  </div>
+                  <div id={READER_ID} style={{ width: "100%" }} />
+               </div>
+
+               {/*<div className="scanner-stage" id="scanner-stage">
                   {!scanning && (
                      <div
                         className="scanner-placeholder"
                         id="scanner-placeholder"
                      >
-                        <div className="camera-icon">
-                           <Camera
-                              style={{ width: "1.6rem", height: "1.6rem" }}
-                           />
-                        </div>
-                        <h2>Camera is not active</h2>
-                        <p>
-                           Start the scanner and allow camera access to scan
-                           student registration QR codes.
-                        </p>
-                        <div className="scan-frame">
-                           <span className="scan-corner tl"></span>
-                           <span className="scan-corner tr"></span>
-                           <span className="scan-corner bl"></span>
-                           <span className="scan-corner br"></span>
-                        </div>
+                        
                      </div>
                   )}
                   <div id={READER_ID} />
-               </div>
+               </div>*/}
 
                <div className="scanner-actions">
                   <button
                      className="btn btn-primary"
                      type="button"
                      onClick={startScan}
-                     disabled={scanning}
+                     disabled={scanning || starting}
                   >
                      <Camera size={16} />
                      Start camera

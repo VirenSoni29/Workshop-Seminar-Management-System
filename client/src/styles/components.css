@@ -1259,6 +1259,7 @@
   .workshop-card .meta-list { gap:var(--sp-2); }
   .workshop-card .seats { margin-top:auto; padding-top:var(--sp-2); }
   .workshop-card .workshop-card__footer { margin-top:0; }
+  @media(max-width:520px) { .workshop-card__banner { min-height:7.25rem; } .workshop-card__title { min-height:0; } }
 
   /* Certificate */
   .certificate-grid { align-items:stretch; }

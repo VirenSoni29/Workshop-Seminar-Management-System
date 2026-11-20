@@ -271,6 +271,7 @@ export default function MyWorkshops() {
                                           <RowActionsMenu
                                              workshop={w}
                                              onChanged={refetch}
+                                             showGenerateCert
                                           />
                                        </div>
                                     </td>

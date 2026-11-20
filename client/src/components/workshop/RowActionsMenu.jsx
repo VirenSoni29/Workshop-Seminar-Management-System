@@ -11,6 +11,7 @@ import {
    CheckCheck,
    Ban,
    Trash2,
+   Award
 } from "lucide-react";
 import {
    submitWorkshopApi,
@@ -18,6 +19,7 @@ import {
    cancelWorkshopApi,
    deleteWorkshopApi,
 } from "../../api/workshops.api";
+import { generateCertificatesApi } from '../../api/certificates.api';
 import ConfirmModal from "../common/ConfirmModal";
 import { notify } from "../../utils/notify";
 import { getErrorMessage } from "../../utils/getErrorMessage";
@@ -39,6 +41,15 @@ const CONFIRMS = {
       danger: false,
       run: (id) => completeWorkshopApi(id),
       done: "Workshop marked as completed",
+   },
+   generateCertificates: {
+      title: "Generate certificates?",
+      message:
+         "Certificates will be generated for all checked-in attendees of this workshop.",
+      confirmText: "Generate",
+      danger: false,
+      run: (id) => generateCertificatesApi(id),
+      done: "Certificates generated successfully",
    },
    cancel: {
       title: "Cancel this workshop?",
@@ -72,7 +83,7 @@ const itemCls =
 const normalColor = "tw:text-inherit!";
 const dangerColor = "tw:text-[color:var(--danger,#b42318)]!";
 
-export default function RowActionsMenu({ workshop, onChanged }) {
+export default function RowActionsMenu({ workshop, onChanged, showGenerateCert = false }) {
    const id = workshop._id || workshop.id;
    const status = workshop.status;
    const [open, setOpen] = useState(false);
@@ -84,6 +95,7 @@ export default function RowActionsMenu({ workshop, onChanged }) {
 
    const isDraftLike = ["draft", "rejected"].includes(status);
    const isApproved = status === "approved";
+   const isCompleted = status === "completed";
    const hasAttendees = ["approved", "completed"].includes(status);
 
    const toggle = () => {
@@ -196,6 +208,13 @@ export default function RowActionsMenu({ workshop, onChanged }) {
                {isApproved && link("/faculty/scan", ScanLine, "Open scanner")}
                {isDraftLike && action("submit", Send, "Submit for approval")}
                {isApproved && action("complete", CheckCheck, "Mark complete")}
+               {showGenerateCert &&
+                  isCompleted &&
+                  action(
+                     "generateCertificates",
+                     Award,
+                     "Generate certificates",
+                  )}
                {isApproved && action("cancel", Ban, "Cancel workshop", true)}
                {isDraftLike && action("delete", Trash2, "Delete", true)}
             </div>
