@@ -5,6 +5,7 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import config from "./config/config.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.js";
+import connectDB from "./config/db.js";
 import { sendSuccess } from "./utils/response.js";
 
 import authRoutes from './routes/authRoutes.js';
